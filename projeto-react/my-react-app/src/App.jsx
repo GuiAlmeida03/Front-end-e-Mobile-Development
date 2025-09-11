@@ -1,9 +1,9 @@
-import BotaoEvento from './components/BotaoEvento';
+import TextoDinamico from './components/TextoDinamico';
 
 function App() {
   return (
     <div>
-      <BotaoEvento />
+      <TextoDinamico />
     </div>
   );
 }
