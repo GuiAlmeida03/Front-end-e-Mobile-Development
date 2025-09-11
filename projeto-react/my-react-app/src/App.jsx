@@ -1,16 +1,16 @@
 // src/App.jsx
 
 // 1. Importe o componente que você quer testar
-import MensagemLogin from './components/MensagemLogin';
+import ListaComIds from './components/ListaComIds';
 
 // 2. Comente os imports dos componentes anteriores
-// import CicloDeVida from './components/CicloDeVida';
+// import MensagemLogin from './components/MensagemLogin';
 
 function App() {
   return (
     <div>
       {/* 3. Renderize o componente em teste */}
-      <MensagemLogin />
+      <ListaComIds />
     </div>
   );
 }
