@@ -1,9 +1,9 @@
-import TextoDinamico from './components/TextoDinamico';
+import MensagemUsuario from './components/MensagemUsuario';
 
 function App() {
   return (
     <div>
-      <TextoDinamico />
+      <MensagemUsuario />
     </div>
   );
 }
