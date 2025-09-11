@@ -1,9 +1,9 @@
-import ContadorSeguro from './components/ContadorSeguro';
+import ListaNumeros from './components/ListaNumeros';
 
 function App() {
   return (
     <div>
-      <ContadorSeguro />
+      <ListaNumeros />
     </div>
   );
 }
