@@ -1,18 +1,16 @@
 // src/App.jsx
 
 // 1. Importe o componente que você quer testar
-import UsuarioInfo from './components/UsuarioInfo';
+import CicloDeVida from './components/CicloDeVida';
 
-// 2. Comente os imports dos componentes que você já testou
-// import BoasVindas from './components/BoasVindas';
-// import Contador from './components/Contador';
-
+// 2. Comente os imports dos componentes anteriores
+// import UsuarioInfo from './components/UsuarioInfo';
 
 function App() {
   return (
     <div>
-      {/* 3. Renderize aqui o componente atual que está sendo testado */}
-      <UsuarioInfo />
+      {/* 3. Renderize o componente em teste */}
+      <CicloDeVida />
     </div>
   );
 }
