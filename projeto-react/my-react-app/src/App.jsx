@@ -1,11 +1,9 @@
-import SaudacaoClasse from './components/SaudacaoClasse';
-import SaudacaoFuncional from './components/SaudacaoFuncional';
+import ContadorSeguro from './components/ContadorSeguro';
 
 function App() {
   return (
     <div>
-      <SaudacaoClasse />
-      <SaudacaoFuncional />
+      <ContadorSeguro />
     </div>
   );
 }
