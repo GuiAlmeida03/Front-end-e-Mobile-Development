@@ -1,9 +1,9 @@
-import ListaNumeros from './components/ListaNumeros';
+import BotaoEvento from './components/BotaoEvento';
 
 function App() {
   return (
     <div>
-      <ListaNumeros />
+      <BotaoEvento />
     </div>
   );
 }
