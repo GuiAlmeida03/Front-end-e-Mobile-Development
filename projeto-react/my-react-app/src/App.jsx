@@ -1,11 +1,9 @@
-import MensagemUsuario from './components/MensagemUsuario';
-
+import ListaNomes from './components/ListaNomes';
 function App() {
-  return (
-    <div>
-      <MensagemUsuario />
-    </div>
-  );
+return (
+<div>
+<ListaNomes />
+</div>
+);
 }
-
 export default App;
