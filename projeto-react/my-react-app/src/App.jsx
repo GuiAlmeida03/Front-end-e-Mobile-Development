@@ -1,11 +1,10 @@
 // src/App.jsx
-
-import BoasVindas from './components/BoasVindas';
+import Contador from './components/Contador';
 
 function App() {
   return (
     <div>
-      <BoasVindas nome="Guilherme" curso="ReactJS com Vite" />
+      <Contador />
     </div>
   );
 }
