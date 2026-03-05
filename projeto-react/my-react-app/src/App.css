@@ -1,95 +1,31 @@
 /* =========================================
-   NOVOS ESTILOS: SISTEMA DE AUTENTICAÇÃO 
+   NOVOS ESTILOS: ISOLAMENTO E AUDITORIA
    ========================================= */
 
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 200px);
-}
-
-.login-box {
-  background: white;
-  border-radius: 24px;
-  padding: 3rem;
-  max-width: 450px;
-  width: 100%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.login-header h2 {
-  color: #0d47a1;
-}
-
-.login-header p {
-  color: #78909c;
-  margin-top: 0.5rem;
-}
-
-.error-message {
-  background: #fee;
-  color: #c00;
-  padding: 1rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: 600;
-  border: 1px solid #fcc;
-}
-
-.login-btn {
-  width: 100%;
-  padding: 1rem;
-  background-color: #0d47a1; /* Azul da marca para o botão de login */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.medico-badge-container {
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.login-btn:hover {
-  background-color: #002171;
+.medico-badge {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
 }
 
-.user-info {
-  background: white;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
-  border-left: 6px solid #2e7d32;
+.empty-state {
+  padding: 3rem 1rem;
 }
 
-.user-type {
-  color: #78909c;
-  font-size: 0.9rem;
-  text-transform: capitalize;
+.empty-state h3 {
+  color: #546e7a;
+  margin-bottom: 0.5rem;
 }
 
-.logout-btn {
-  padding: 0.5rem 1.5rem;
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: #b71c1c;
+.empty-state p {
+  color: #90a4ae;
 }
