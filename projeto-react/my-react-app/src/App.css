@@ -1,6 +1,236 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f4f7f6;
+  color: #333;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
 /* =========================================
-   NOVOS ESTILOS: ISOLAMENTO E AUDITORIA
+   ESTILOS: SISTEMA DE AUTENTICAÇÃO E AUDITORIA
    ========================================= */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+}
+
+.login-box {
+  background: white;
+  border-radius: 24px;
+  padding: 3rem;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h2 {
+  color: #0d47a1;
+}
+
+.login-header p {
+  color: #78909c;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  background: #fee;
+  color: #c00;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.login-btn:hover {
+  background-color: #002171;
+}
+
+.user-info {
+  background: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  border-left: 6px solid #2e7d32;
+}
+
+.user-type {
+  color: #78909c;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.logout-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #b71c1c;
+}
+
+/* =========================================
+   ESTILOS: SISTEMA CARDIOLÓGICO
+   ========================================= */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: #0d47a1;
+  font-size: 2.5rem;
+}
+
+.header p {
+  color: #546e7a;
+  font-size: 1.1rem;
+}
+
+.form-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 3rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+input {
+  padding: 0.8rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background-color: #1b5e20;
+}
+
+.records-section h2 {
+  color: #0d47a1;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.record-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 6px solid #2196f3;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.record-card:hover {
+  transform: translateY(-5px);
+}
+
+.record-card h3 {
+  color: #0d47a1;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 0.5rem;
+}
+
+.card-details p {
+  margin-bottom: 0.5rem;
+  color: #455a64;
+}
+
+.registro-data {
+  margin-top: 1.2rem;
+  color: #9e9e9e;
+  text-align: right;
+  border-top: 1px dashed #eeeeee;
+  padding-top: 0.5rem;
+}
 
 .medico-badge-container {
   margin-top: 1rem;
@@ -17,8 +247,19 @@
   display: inline-block;
 }
 
+.no-data {
+  text-align: center;
+  color: #78909c;
+  font-style: italic;
+  background-color: #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 .empty-state {
   padding: 3rem 1rem;
+  background-color: #ffffff;
+  border: 1px dashed #cfd8dc;
 }
 
 .empty-state h3 {
@@ -28,4 +269,13 @@
 
 .empty-state p {
   color: #90a4ae;
+  font-style: normal;
+}
+
+/* Responsividade para celulares */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// Array mockado simulando um banco de dados de usuários
 const usuariosMock = [
   { id: 1, nome: 'Dr. João Silva', email: 'joao@cardiolife.com', senha: '123456', tipo: 'médico' },
   { id: 2, nome: 'Dra. Maria Santos', email: 'maria@cardiolife.com', senha: '123456', tipo: 'médica' },
@@ -8,15 +9,18 @@ const usuariosMock = [
 ]
 
 function App() {
+  // === ESTADOS DE AUTENTICAÇÃO ===
   const [usuarioLogado, setUsuarioLogado] = useState(null)
   const [loginData, setLoginData] = useState({ email: '', senha: '' })
   const [erroLogin, setErroLogin] = useState('')
 
+  // === ESTADOS DO SISTEMA CARDIOLÓGICO ===
   const [formData, setFormData] = useState({
     nome: '', idade: '', peso: '', pressaoSistolica: '', pressaoDiastolica: ''
   })
   const [savedData, setSavedData] = useState([])
 
+  // === EFEITO: CARREGAR SESSÃO E DADOS SALVOS ===
   // 1º Efeito - Restaura a sessão ao carregar a página
   useEffect(() => {
     const sessaoSalva = localStorage.getItem('sessaoCardioLife')
@@ -52,6 +56,7 @@ function App() {
     }
   }, [usuarioLogado])
 
+  // === LÓGICA DE LOGIN E LOGOUT ===
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target
     setLoginData(prev => ({ ...prev, [name]: value }))
@@ -78,6 +83,7 @@ function App() {
         email: usuarioEncontrado.email,
         tipo: usuarioEncontrado.tipo
       }
+
       localStorage.setItem('sessaoCardioLife', JSON.stringify(dadosUsuario))
       setUsuarioLogado(dadosUsuario)
 
@@ -95,7 +101,7 @@ function App() {
         const dadosSalvosUsuario = localStorage.getItem(chaveUsuario)
         setSavedData(dadosSalvosUsuario ? JSON.parse(dadosSalvosUsuario) : [])
       }
-      
+
       setLoginData({ email: '', senha: '' })
     } else {
       setErroLogin('Email ou senha incorretos')
@@ -109,6 +115,7 @@ function App() {
     alert('Logout realizado com sucesso!')
   }
 
+  // === LÓGICA DO FORMULÁRIO CARDIOLÓGICO ===
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -121,7 +128,6 @@ function App() {
       return
     }
 
-    // Agora o registro salva a "assinatura" do médico que o criou
     const novoRegistro = {
       ...formData,
       id: Date.now(),
@@ -141,6 +147,7 @@ function App() {
     alert('Dados salvos com sucesso!')
   }
 
+  // === RENDERIZAÇÃO DA INTERFACE ===
   return (
     <div className="container">
       <header className="header">
@@ -148,6 +155,7 @@ function App() {
         <p>Sistema de Monitoramento Cardiológico</p>
       </header>
 
+      {/* RENDERIZAÇÃO CONDICIONAL: Tela de Login OU Sistema */}
       {!usuarioLogado ? (
         <div className="login-container">
           <div className="login-box">
@@ -175,6 +183,7 @@ function App() {
         </div>
       ) : (
         <>
+          {/* Barra de usuário logado */}
           <div className="user-info">
             <div className="user-details">
               <div>
@@ -194,6 +203,7 @@ function App() {
                     <label htmlFor="nome">Nome do Paciente</label>
                     <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Ex: João da Silva" />
                   </div>
+                  
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="idade">Idade</label>
@@ -204,6 +214,7 @@ function App() {
                       <input type="number" id="peso" name="peso" value={formData.peso} onChange={handleInputChange} placeholder="Ex: 75.5" step="0.1" />
                     </div>
                   </div>
+                  
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="pressaoSistolica">Pressão Sistólica (Máx)</label>
@@ -214,11 +225,13 @@ function App() {
                       <input type="number" id="pressaoDiastolica" name="pressaoDiastolica" value={formData.pressaoDiastolica} onChange={handleInputChange} placeholder="Ex: 8" />
                     </div>
                   </div>
+                  
                   <button type="submit" className="submit-btn">Salvar Dados</button>
                 </form>
               </section>
             )}
 
+            {/* Listagem dos Últimos Registros */}
             <section className="records-section">
               {savedData.length > 0 ? (
                 <>
