@@ -27,18 +27,18 @@ const usuariosMock = [
 ]
 
 function App() {
-  // Estados do formulário cardiológico (já existentes)
+  // 1. ADICIONADO CAMPO ALTURA AQUI
   const [formData, setFormData] = useState({
     nome: '',
     idade: '',
     peso: '',
+    altura: '', 
     pressaoSistolica: '',
     pressaoDiastolica: ''
   })
 
   const [savedData, setSavedData] = useState([])
 
-  // Estados de autenticação (NOVOS)
   const [usuarioLogado, setUsuarioLogado] = useState(null)
   const [loginData, setLoginData] = useState({
     email: '',
@@ -46,13 +46,10 @@ function App() {
   })
   const [erroLogin, setErroLogin] = useState('')
 
-  // Estados do modal de laudo médico
   const [modalLaudo, setModalLaudo] = useState(false)
   const [laudoAtual, setLaudoAtual] = useState(null)
 
-  // Carregar dados do localStorage ao inicializar
   useEffect(() => {
-    // Verificar se existe sessão salva
     const sessaoSalva = localStorage.getItem('sessaoCardioLife')
     if (sessaoSalva) {
       const dadosSessao = JSON.parse(sessaoSalva)
@@ -60,58 +57,44 @@ function App() {
     }
   }, [])
 
-  // Carregar dados do usuário logado (quando ele faz login ou ao montar)
   useEffect(() => {
     if (usuarioLogado) {
-      // Admin (id === 3) pode ver dados de TODOS os médicos
       if (usuarioLogado.id === 3) {
         const todosOsDados = []
-        
-        // Carregar dados de todos os usuários (IDs 1, 2, 3)
         for (let i = 1; i <= 3; i++) {
           const chave = `dadosCardiologicos_${i}`
           const dados = localStorage.getItem(chave)
-          
           if (dados) {
             todosOsDados.push(...JSON.parse(dados))
           }
         }
-        
         setSavedData(todosOsDados)
       } else {
-        // Médicos comuns veem apenas seus próprios dados
         const chaveUsuario = `dadosCardiologicos_${usuarioLogado.id}`
         const dadosSalvos = localStorage.getItem(chaveUsuario)
-        
         if (dadosSalvos) {
           setSavedData(JSON.parse(dadosSalvos))
         } else {
-          // Se não há dados, inicia array vazio
           setSavedData([])
         }
       }
     }
   }, [usuarioLogado])
 
-  // Função para manipular login
   const handleLogin = (e) => {
     e.preventDefault()
-    setErroLogin('') // Limpa erros anteriores
+    setErroLogin('')
 
-    // Validar campos vazios
     if (!loginData.email || !loginData.senha) {
       setErroLogin('Por favor, preencha todos os campos')
       return
     }
 
-    // Buscar usuário no banco mockado
     const usuarioEncontrado = usuariosMock.find(
       usuario => usuario.email === loginData.email && usuario.senha === loginData.senha
     )
 
-    // Verificar se encontrou
     if (usuarioEncontrado) {
-      // Dados que serão salvos (sem a senha por segurança)
       const dadosUsuario = {
         id: usuarioEncontrado.id,
         nome: usuarioEncontrado.nome,
@@ -119,11 +102,9 @@ function App() {
         tipo: usuarioEncontrado.tipo
       }
 
-      // Salvar sessão no localStorage
       localStorage.setItem('sessaoCardioLife', JSON.stringify(dadosUsuario))
       setUsuarioLogado(dadosUsuario)
       
-      // Carregar dados do usuário que acabou de logar
       const chaveUsuario = `dadosCardiologicos_${dadosUsuario.id}`
       const dadosSalvosUsuario = localStorage.getItem(chaveUsuario)
       if (dadosSalvosUsuario) {
@@ -132,33 +113,28 @@ function App() {
         setSavedData([])
       }
       
-      // Limpar formulário
       setLoginData({ email: '', senha: '' })
     } else {
       setErroLogin('Email ou senha incorretos')
     }
   }
 
-  // Função para logout
   const handleLogout = () => {
     localStorage.removeItem('sessaoCardioLife')
     setUsuarioLogado(null)
-    setSavedData([]) // Limpa os dados ao fazer logout
+    setSavedData([])
     alert('Logout realizado com sucesso!')
   }
 
-  // Função para manipular inputs do login
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target
     setLoginData(prev => ({
       ...prev,
       [name]: value
     }))
-    // Limpa erro quando usuário começa a digitar
     if (erroLogin) setErroLogin('')
   }
 
-  // Função para manipular inputs do formulário cardiológico
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -167,12 +143,10 @@ function App() {
     }))
   }
 
-  // Função para classificar pressão arterial segundo diretrizes brasileiras
   const classificarPressao = (sistolica, diastolica) => {
     const sis = parseInt(sistolica)
     const dia = parseInt(diastolica)
 
-    // Hipertensão Estágio 3 (Muito Crítico)
     if (sis >= 180 || dia >= 110) {
       return {
         nivel: 'Hipertensão Estágio 3',
@@ -190,7 +164,6 @@ function App() {
       }
     }
 
-    // Hipertensão Estágio 2 (Crítico)
     if ((sis >= 160 && sis <= 179) || (dia >= 100 && dia <= 109)) {
       return {
         nivel: 'Hipertensão Estágio 2',
@@ -209,7 +182,6 @@ function App() {
       }
     }
 
-    // Hipertensão Estágio 1 (Alerta)
     if ((sis >= 140 && sis <= 159) || (dia >= 90 && dia <= 99)) {
       return {
         nivel: 'Hipertensão Estágio 1',
@@ -228,7 +200,6 @@ function App() {
       }
     }
 
-    // Limítrofe / Pré-hipertensão
     if ((sis >= 130 && sis <= 139) || (dia >= 85 && dia <= 89)) {
       return {
         nivel: 'Pressão Limítrofe',
@@ -247,7 +218,6 @@ function App() {
       }
     }
 
-    // Normal
     if ((sis >= 120 && sis <= 129) || (dia >= 80 && dia <= 84)) {
       return {
         nivel: 'Pressão Normal',
@@ -266,7 +236,6 @@ function App() {
       }
     }
 
-    // Ótima
     if (sis < 120 && dia < 80) {
       return {
         nivel: 'Pressão Ótima',
@@ -289,49 +258,56 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // Validações básicas
-    if (!formData.nome || !formData.idade || !formData.peso || 
+    // 2. VALIDAÇÃO ATUALIZADA PARA INCLUIR ALTURA
+    if (!formData.nome || !formData.idade || !formData.peso || !formData.altura ||
         !formData.pressaoSistolica || !formData.pressaoDiastolica) {
       alert('Por favor, preencha todos os campos!')
       return
     }
 
-    if (isNaN(formData.idade) || isNaN(formData.peso) || 
+    if (isNaN(formData.idade) || isNaN(formData.peso) || isNaN(formData.altura) ||
         isNaN(formData.pressaoSistolica) || isNaN(formData.pressaoDiastolica)) {
-      alert('Idade, peso e pressão devem ser números válidos!')
+      alert('Idade, peso, altura e pressão devem ser números válidos!')
       return
     }
 
-    // Criar novo registro com timestamp e usuário
+    // 3. CÁLCULO DO IMC
+    const pesoNum = parseFloat(formData.peso);
+    const alturaNum = parseFloat(formData.altura);
+    const imcCalculado = (pesoNum / (alturaNum * alturaNum)).toFixed(2);
+
     const novoRegistro = {
       ...formData,
+      imc: imcCalculado,
       id: Date.now(),
       dataRegistro: new Date().toLocaleString('pt-BR'),
       usuarioId: usuarioLogado.id,
       usuarioNome: usuarioLogado.nome
     }
 
-    // Salvar no localStorage específico do usuário
     const dadosAtualizados = [...savedData, novoRegistro]
     const chaveUsuario = `dadosCardiologicos_${usuarioLogado.id}`
     localStorage.setItem(chaveUsuario, JSON.stringify(dadosAtualizados))
     setSavedData(dadosAtualizados)
 
-    // Gerar laudo automático baseado na pressão arterial
     const laudo = classificarPressao(formData.pressaoSistolica, formData.pressaoDiastolica)
+    
+    // 4. INSERINDO O IMC NO LAUDO DO MODAL
     setLaudoAtual({
       ...laudo,
       paciente: formData.nome,
       pressao: `${formData.pressaoSistolica}/${formData.pressaoDiastolica}`,
+      imc: imcCalculado,
       data: new Date().toLocaleString('pt-BR')
     })
     setModalLaudo(true)
 
-    // Limpar formulário
+    // LIMPEZA ATUALIZADA
     setFormData({
       nome: '',
       idade: '',
       peso: '',
+      altura: '',
       pressaoSistolica: '',
       pressaoDiastolica: ''
     })
@@ -345,7 +321,6 @@ function App() {
       </header>
 
       {!usuarioLogado ? (
-        // TELA DE LOGIN
         <div className="login-container">
           <div className="login-box">
             <div className="login-header">
@@ -401,7 +376,6 @@ function App() {
           </div>
         </div>
       ) : (
-        // SISTEMA PRINCIPAL (após login)
         <>
           <div className="user-info">
             <div className="user-details">
@@ -465,6 +439,23 @@ function App() {
                       required
                     />
                   </div>
+                  
+                  {/* 5. NOVO INPUT DE ALTURA AQUI NO HTML */}
+                  <div className="form-group">
+                    <label htmlFor="altura">Altura (m):</label>
+                    <input
+                      type="number"
+                      id="altura"
+                      name="altura"
+                      value={formData.altura}
+                      onChange={handleInputChange}
+                      placeholder="Ex: 1.75"
+                      step="0.01"
+                      min="0.5"
+                      max="3.0"
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group pressure-group">
@@ -519,7 +510,7 @@ function App() {
                       )}
                       <h4>{registro.nome}</h4>
                       <p><strong>Idade:</strong> {registro.idade} anos</p>
-                      <p><strong>Peso:</strong> {registro.peso} kg</p>
+                      <p><strong>Peso/Altura:</strong> {registro.peso} kg / {registro.altura} m</p>
                       <p><strong>Pressão:</strong> {registro.pressaoSistolica}/{registro.pressaoDiastolica} mmHg</p>
                       <p className="record-date">{registro.dataRegistro}</p>
                     </div>
@@ -531,17 +522,12 @@ function App() {
                 <div className="empty-icon">🩺</div>
                 <h3>Nenhum Registro Encontrado</h3>
                 <p>Você ainda não possui aferições de pressão arterial registradas.</p>
-                <p className="empty-tip">
-                  💡 <strong>Dica:</strong> Comece medindo sua pressão arterial com um esfigmomanômetro 
-                  e registre os dados no formulário ao lado para mantê-los salvos.
-                </p>
               </div>
             )}
           </main>
         </>
       )}
 
-      {/* Modal de Laudo Médico Automático */}
       {modalLaudo && laudoAtual && (
         <div className="modal-overlay" onClick={() => setModalLaudo(false)}>
           <div className="modal-laudo" onClick={(e) => e.stopPropagation()}>
@@ -559,15 +545,15 @@ function App() {
             </div>
 
             <div className="modal-body">
-              {/* Informações do Paciente */}
               <div className="laudo-info">
                 <p><strong>Paciente:</strong> {laudoAtual.paciente}</p>
                 <p><strong>Pressão Arterial:</strong> {laudoAtual.pressao} mmHg</p>
+                {/* 6. EXIBINDO O IMC CALCULADO NO MODAL */}
+                <p><strong>IMC:</strong> {laudoAtual.imc} kg/m²</p>
                 <p><strong>Data/Hora:</strong> {laudoAtual.data}</p>
                 <p><strong>Médico:</strong> {usuarioLogado.nome}</p>
               </div>
 
-              {/* Classificação */}
               <div 
                 className={`laudo-classificacao ${laudoAtual.gravidade}`}
                 style={{ borderLeftColor: laudoAtual.cor }}
@@ -577,7 +563,6 @@ function App() {
                 <p>{laudoAtual.descricao}</p>
               </div>
 
-              {/* Recomendações */}
               <div className="laudo-recomendacoes">
                 <h4>📌 RECOMENDAÇÕES MÉDICAS:</h4>
                 <ul>
@@ -587,7 +572,6 @@ function App() {
                 </ul>
               </div>
 
-              {/* Aviso Legal */}
               <div className="laudo-aviso">
                 <p>
                   ⚠️ <strong>Aviso Importante:</strong> Este laudo é gerado automaticamente 
@@ -596,7 +580,6 @@ function App() {
                 </p>
               </div>
 
-              {/* Botão de Fechar */}
               <button 
                 className="btn-fechar-laudo"
                 onClick={() => setModalLaudo(false)}
