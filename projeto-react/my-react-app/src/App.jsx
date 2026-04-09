@@ -255,6 +255,31 @@ function App() {
     }
   }
 
+  const classificarIMC = (imc) => {
+    if (imc < 18.5) {
+      return {
+        rotulo: 'Abaixo do peso',
+        descricao: 'IMC abaixo da faixa considerada adequada para a altura.'
+      }
+    }
+    if (imc < 25) {
+      return {
+        rotulo: 'Peso normal',
+        descricao: 'IMC dentro da faixa saudável segundo critérios da OMS.'
+      }
+    }
+    if (imc < 30) {
+      return {
+        rotulo: 'Sobrepeso',
+        descricao: 'IMC acima do ideal. Avalie hábitos e acompanhamento com profissional de saúde.'
+      }
+    }
+    return {
+      rotulo: 'Obesidade',
+      descricao: 'IMC na faixa de obesidade. Recomenda-se avaliação médica e nutricional.'
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     
@@ -272,13 +297,16 @@ function App() {
     }
 
     // 3. CÁLCULO DO IMC
-    const pesoNum = parseFloat(formData.peso);
-    const alturaNum = parseFloat(formData.altura);
-    const imcCalculado = (pesoNum / (alturaNum * alturaNum)).toFixed(2);
+    const pesoNum = parseFloat(formData.peso)
+    const alturaNum = parseFloat(formData.altura)
+    const imcValor = pesoNum / (alturaNum * alturaNum)
+    const imcCalculado = imcValor.toFixed(2)
+    const imcInfo = classificarIMC(imcValor)
 
     const novoRegistro = {
       ...formData,
       imc: imcCalculado,
+      imcClassificacao: imcInfo.rotulo,
       id: Date.now(),
       dataRegistro: new Date().toLocaleString('pt-BR'),
       usuarioId: usuarioLogado.id,
@@ -298,6 +326,8 @@ function App() {
       paciente: formData.nome,
       pressao: `${formData.pressaoSistolica}/${formData.pressaoDiastolica}`,
       imc: imcCalculado,
+      imcRotulo: imcInfo.rotulo,
+      imcDescricaoClassificacao: imcInfo.descricao,
       data: new Date().toLocaleString('pt-BR')
     })
     setModalLaudo(true)
@@ -550,6 +580,14 @@ function App() {
                 <p><strong>Pressão Arterial:</strong> {laudoAtual.pressao} mmHg</p>
                 {/* 6. EXIBINDO O IMC CALCULADO NO MODAL */}
                 <p><strong>IMC:</strong> {laudoAtual.imc} kg/m²</p>
+                <div className="imc-classificacao">
+                  <p>
+                    <strong>Classificação (IMC):</strong> {laudoAtual.imcRotulo}
+                  </p>
+                  <p className="imc-classificacao-detalhe">
+                    {laudoAtual.imcDescricaoClassificacao}
+                  </p>
+                </div>
                 <p><strong>Data/Hora:</strong> {laudoAtual.data}</p>
                 <p><strong>Médico:</strong> {usuarioLogado.nome}</p>
               </div>

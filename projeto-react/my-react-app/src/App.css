@@ -272,6 +272,27 @@ input:focus {
   font-style: normal;
 }
 
+.imc-classificacao {
+  margin: 0.75rem 0;
+  padding: 0.65rem 0.85rem;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border-left: 4px solid #0d47a1;
+}
+
+.imc-classificacao p {
+  margin: 0;
+  color: #37474f;
+  font-size: 0.95rem;
+}
+
+.imc-classificacao-detalhe {
+  margin-top: 0.4rem !important;
+  font-size: 0.88rem !important;
+  color: #546e7a !important;
+  line-height: 1.4;
+}
+
 /* Responsividade para celulares */
 @media (max-width: 600px) {
   .form-row {
